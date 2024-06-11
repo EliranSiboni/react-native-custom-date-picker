@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet, ViewStyle } from 'react-native';
 import { CalendarThemeProps, IDayObject } from '../types';
 import { CALENDAR_HEIGHT } from '../enums';
 import { addColorAlpha } from '../utils';
@@ -47,12 +47,14 @@ function Day({
     selectedTextStyle,
     todayContainerStyle,
     todayTextStyle,
+    selectedRangeBackgroundColor,
   } = theme;
 
-  //const bothWays = inRange && leftCrop && rightCrop;
   const isCrop = inRange && (leftCrop || rightCrop) && !(leftCrop && rightCrop);
 
-  const containerStyle = isCurrentMonth ? dayContainerStyle : { opacity: 0.3 };
+  const containerStyle = isCurrentMonth
+    ? dayContainerStyle
+    : ({ color: 'rgba(0,0,0,0.4)' } as ViewStyle);
 
   const todayItemStyle = isToday
     ? {
@@ -77,9 +79,12 @@ function Day({
         color: selectedItemColor || '#0047FF',
         ...todayTextStyle,
       }
-    : calendarTextStyle;
+    : isCurrentMonth
+    ? calendarTextStyle
+    : { color: 'rgba(0,0,0,0.4)' };
 
-  const rangeRootBackground = addColorAlpha(selectedItemColor, 0.15);
+  const rangeRootBackground =
+    selectedRangeBackgroundColor ?? addColorAlpha(selectedItemColor, 0.15);
 
   const style = styles(height || CALENDAR_HEIGHT);
 
@@ -88,7 +93,7 @@ function Day({
       {inRange && !isCrop ? (
         <View
           style={[style.rangeRoot, { backgroundColor: rangeRootBackground }]}
-        ></View>
+        />
       ) : null}
 
       {isCrop && leftCrop ? (
@@ -100,7 +105,7 @@ function Day({
               backgroundColor: rangeRootBackground,
             },
           ]}
-        ></View>
+        />
       ) : null}
 
       {isCrop && rightCrop ? (
@@ -112,7 +117,7 @@ function Day({
               backgroundColor: rangeRootBackground,
             },
           ]}
-        ></View>
+        />
       ) : null}
 
       <Pressable
@@ -160,7 +165,7 @@ const styles = (height: number) =>
     },
     rangeRoot: {
       position: 'absolute',
-      left: 0,
+      left: -1,
       right: 0,
       top: 2,
       bottom: 2,

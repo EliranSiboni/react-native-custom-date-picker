@@ -190,6 +190,8 @@ export default function App() {
               startDate={range.startDate}
               endDate={range.endDate}
               dates={dates}
+              minDate={dayjs().add(2, 'weeks')}
+              selectedRangeBackgroundColor="pink"
               //minDate={dayjs().startOf('day')}
               //maxDate={dayjs().add(3, 'day').endOf('day')}
               //firstDayOfWeek={1}

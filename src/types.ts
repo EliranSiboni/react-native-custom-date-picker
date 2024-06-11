@@ -44,6 +44,7 @@ export type CalendarThemeProps = {
   selectedItemColor?: string;
   timePickerContainerStyle?: ViewStyle;
   timePickerTextStyle?: TextStyle;
+  selectedRangeBackgroundColor?: string;
 };
 
 export type HeaderProps = {
